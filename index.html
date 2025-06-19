@@ -1,677 +1,88 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ECU Remap Pro - ผู้เชี่ยวชาญด้านการรีแมพรถยนต์</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header */
-        header {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #fff;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: #fff;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-        }
-
-        .nav-links a:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: #fff;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="%23ffffff08" points="0,0 1000,300 1000,1000 0,700"/></svg>');
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
-            animation: slideInUp 1s ease-out;
-        }
-
-        .hero p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-            animation: slideInUp 1s ease-out 0.3s both;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
-            color: #fff;
-            padding: 1rem 2.5rem;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
-            animation: slideInUp 1s ease-out 0.6s both;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.4);
-        }
-
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Services Section */
-        .services {
-            padding: 5rem 0;
-            background: #fff;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 3rem;
-            margin-bottom: 3rem;
-            color: #333;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
-            border-radius: 2px;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .service-card {
-            background: #fff;
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            text-align: center;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            border-color: #ff6b6b;
-        }
-
-        .service-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 2rem;
-            color: #fff;
-        }
-
-        .service-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #333;
-        }
-
-        .service-card p {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        /* Products Section */
-        .products {
-            padding: 5rem 0;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .product-card {
-            background: #fff;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-        }
-
-        .product-image {
-            height: 200px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-size: 3rem;
-            font-weight: bold;
-        }
-
-        .product-info {
-            padding: 2rem;
-        }
-
-        .product-info h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #333;
-        }
-
-        .product-info p {
-            color: #666;
-            margin-bottom: 1.5rem;
-        }
-
-        .product-price {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #ff6b6b;
-            margin-bottom: 1rem;
-        }
-
-        .buy-button {
-            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
-            color: #fff;
-            border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-
-        .buy-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
-        }
-
-        /* About Section */
-        .about {
-            padding: 5rem 0;
-            background: #fff;
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .about-text {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #666;
-        }
-
-        .about-image {
-            height: 400px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-size: 2rem;
-        }
-
-        /* Contact Section */
-        .contact {
-            padding: 5rem 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
-        }
-
-        .contact-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-        }
-
-        .contact-info h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .contact-info p {
-            margin-bottom: 1rem;
-            opacity: 0.9;
-        }
-
-        .contact-form {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            border: none;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.2);
-            color: #fff;
-            font-size: 1rem;
-        }
-
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .submit-button {
-            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
-            color: #fff;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-
-        .submit-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
-        }
-
-        /* Footer */
-        footer {
-            background: #333;
-            color: #fff;
-            text-align: center;
-            padding: 2rem 0;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.2rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .about-content,
-            .contact-content {
-                grid-template-columns: 1fr;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-        }
-
-        /* Animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ขายโปรแกรม ECU Remap</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <header>
-        <nav class="container">
-            <div class="logo">🚗 ECU Remap Pro</div>
-            <ul class="nav-links">
-                <li><a href="#home">หน้าหลัก</a></li>
-                <li><a href="#services">บริการ</a></li>
-                <li><a href="#products">ไฟล์รีแมพ</a></li>
-                <li><a href="#about">เกี่ยวกับเรา</a></li>
-                <li><a href="#contact">ติดต่อ</a></li>
-            </ul>
-        </nav>
-    </header>
+<body class="bg-gray-100 text-gray-800">
 
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1>ECU Remap Pro</h1>
-            <p>ผู้เชี่ยวชาญด้านการรีแมพรถยนต์และขายโปรแกรมไฟล์รีแมพคุณภาพสูง</p>
-            <a href="#services" class="cta-button">เริ่มต้นเลย</a>
+  <!-- Navbar -->
+  <header class="bg-black text-white shadow-md">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <div>
+        <h1 class="text-2xl font-bold">TR Remap Tool</h1>
+        <p class="text-sm text-gray-400">เครื่องมือรีแมพ ECU /ไฟล์ รถต่างๆ </p>
+      </div>
+      <nav>
+        <ul class="flex space-x-6 text-white font-semibold text-sm">
+          <li><a href="#home" class="hover:text-green-400 transition">หน้าหลัก</a></li>
+          <li><a href="#contact" class="hover:text-green-400 transition">ติดต่อ</a></li>
+          <li><a href="#topup" class="hover:text-green-400 transition">เติมเงิน</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto mt-10 px-6" id="home">
+
+    <!-- โปรแกรม -->
+    <section class="bg-white rounded-2xl shadow-lg p-8 flex flex-col md:flex-row gap-8 items-start">
+      <!-- รูปภาพ -->
+      <div class="w-full md:w-1/2">
+        <img src="/IMG/remap01.png" alt="หน้าจอโปรแกรม TR Remap" class="rounded-xl shadow-md w-full h-auto object-cover">
+      </div>
+
+      <!-- ข้อมูล -->
+      <div class="w-full md:w-1/2">
+        <h2 class="text-2xl font-bold mb-4">โปรแกรม HondaFlashtool V.1</h2>
+        <p class="mb-6 text-gray-700">
+          โปรแกรม TR Remap Tool เหมาะสำหรับช่างที่ต้องการเครื่องมืออัดไฟล์ อย่างง่ายดาย รองรับไฟล์ BIN 
+          และระบบการดูค่าดาต้าต่างๆ ลบโค้ด ปลดXDF&ADX ลบจำนวนการอัดออโต้ได้
+        </p>
+
+        <ul class="list-disc list-inside text-gray-700 mb-6">
+          <li>มีระบบป้องกัน Recovery</li>
+          <li>เชื่อมต่อผ่าน FTDI หรือ USB</li>
+          <li>วิเคราะห์ดูดาต้าเรียลไทม์</li>
+          <li>รองรับ Honda หลายรุ่น 110cc - 160cc</li>
+          <li>อัปเดตฟรีตลอดชีพ</li>
+        </ul>
+
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="text-center md:text-left">
+            <p class="text-xl font-semibold text-green-600">💰 ราคาเพียง 500 บาท</p>
+            <p class="text-sm text-gray-500">ชำระครั้งเดียว ไม่มีรายปี</p>
+          </div>
+
+          <a href="https://lin.ee/yourlinelink" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl transition">
+            สั่งซื้อผ่าน LINE
+          </a>
         </div>
+      </div>
     </section>
 
-    <section id="services" class="services">
-        <div class="container">
-            <h2 class="section-title fade-in">บริการของเรา</h2>
-            <div class="services-grid">
-                <div class="service-card fade-in">
-                    <div class="service-icon">🔧</div>
-                    <h3>ECU Remapping</h3>
-                    <p>บริการรีแมพ ECU รถยนต์ทุกรุ่น เพิ่มพลังงาน ประหยัดเชื้อเฟื่อง ด้วยเทคโนโลยีล่าสุด</p>
-                </div>
-                <div class="service-card fade-in">
-                    <div class="service-icon">💾</div>
-                    <h3>ไฟล์รีแมพ</h3>
-                    <p>จำหน่ายไฟล์รีแมพคุณภาพสูง สำหรับรถยนต์ทุกยี่ห้อ ทุกรุ่น พร้อมการรับประกัน</p>
-                </div>
-                <div class="service-card fade-in">
-                    <div class="service-icon">🛠️</div>
-                    <h3>โปรแกรมรีแมพ</h3>
-                    <p>ขายโปรแกรมรีแมพมืออาชีพ พร้อมการอบรมและสนับสนุนเทคนิค</p>
-                </div>
-                <div class="service-card fade-in">
-                    <div class="service-icon">📊</div>
-                    <h3>Dyno Testing</h3>
-                    <p>บริการทดสอบพลังงานเครื่องยนต์บนเครื่อง Dyno เพื่อความแม่นยำสูงสุด</p>
-                </div>
-                <div class="service-card fade-in">
-                    <div class="service-icon">🎯</div>
-                    <h3>Custom Tuning</h3>
-                    <p>บริการปรับแต่งเฉพาะรถ ตามการใช้งานและความต้องการของลูกค้า</p>
-                </div>
-                <div class="service-card fade-in">
-                    <div class="service-icon">🔒</div>
-                    <h3>Security Services</h3>
-                    <p>บริการเก่ียวกับระบบความปลอดภัย Immobilizer และ Key Programming</p>
-                </div>
-            </div>
-        </div>
+    <!-- ติดต่อ -->
+    <section id="contact" class="mt-16 bg-white rounded-xl p-8 shadow-md">
+      <h3 class="text-xl font-bold mb-4">📞 ติดต่อเรา</h3>
+      <p class="text-gray-700">Line: @trremap | โทร: 08x-xxx-xxxx | Facebook: TR Remap</p>
     </section>
 
-    <section id="products" class="products">
-        <div class="container">
-            <h2 class="section-title fade-in">ไฟล์รีแมพยอดนิยม</h2>
-            <div class="products-grid">
-                <div class="product-card fade-in">
-                    <div class="product-image">Honda</div>
-                    <div class="product-info">
-                        <h3>Honda Civic Type R</h3>
-                        <p>ไฟล์รีแมพสำหรับ Honda Civic Type R เพิ่มพลังงาน +50HP พร้อมปรับแต่งระบบเชื้อเพลิง</p>
-                        <div class="product-price">฿2,500</div>
-                        <button class="buy-button">สั่งซื้อทันที</button>
-                    </div>
-                </div>
-                <div class="product-card fade-in">
-                    <div class="product-image">Toyota</div>
-                    <div class="product-info">
-                        <h3>Toyota Supra A90</h3>
-                        <p>ไฟล์รีแมพ B58 Engine เพิ่มพลังงานสูงสุด +100HP พร้อมระบบ Launch Control</p>
-                        <div class="product-price">฿3,500</div>
-                        <button class="buy-button">สั่งซื้อทันที</button>
-                    </div>
-                </div>
-                <div class="product-card fade-in">
-                    <div class="product-image">BMW</div>
-                    <div class="product-info">
-                        <h3>BMW M3 F80</h3>
-                        <p>ไฟล์รีแมพ S55 Twin Turbo เพิ่มพลังงาน +80HP พร้อมปรับแต่ง Burble และ Pops</p>
-                        <div class="product-price">฿4,000</div>
-                        <button class="buy-button">สั่งซื้อทันที</button>
-                    </div>
-                </div>
-                <div class="product-card fade-in">
-                    <div class="product-image">Audi</div>
-                    <div class="product-info">
-                        <h3>Audi RS3 8Y</h3>
-                        <p>ไฟล์รีแมพ EA855 EVO เพิ่มพลังงาน +70HP พร้อมระบบ Anti-lag และ Flat Shift</p>
-                        <div class="product-price">฿4,500</div>
-                        <button class="buy-button">สั่งซื้อทันที</button>
-                    </div>
-                </div>
-                <div class="product-card fade-in">
-                    <div class="product-image">VW</div>
-                    <div class="product-info">
-                        <h3>Volkswagen Golf R</h3>
-                        <p>ไฟล์รีแมพ EA888 GEN3 เพิ่มพลังงาน +60HP พร้อมปรับแต่งระบบ DSG</p>
-                        <div class="product-price">฿3,000</div>
-                        <button class="buy-button">สั่งซื้อทันที</button>
-                    </div>
-                </div>
-                <div class="product-card fade-in">
-                    <div class="product-image">Mazda</div>
-                    <div class="product-info">
-                        <h3>Mazda MX-5 ND</h3>
-                        <p>ไฟล์รีแมพ Skyactiv-G 2.0 เพิ่มพลังงาน +25HP พร้อมปรับแต่ง Rev Limit</p>
-                        <div class="product-price">฿2,000</div>
-                        <button class="buy-button">สั่งซื้อทันที</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- เติมเงิน -->
+    <section id="topup" class="mt-16 bg-white rounded-xl p-8 shadow-md">
+      <h3 class="text-xl font-bold mb-4">💳 เติมเงิน</h3>
+      <p class="text-gray-700 mb-4">สามารถชำระเงินผ่าน QR Code หรือโอนเข้าบัญชี</p>
+      <img src="qrcode.png" alt="QR Code" class="w-48 h-auto mx-auto">
     </section>
 
-    <section id="about" class="about">
-        <div class="container">
-            <h2 class="section-title fade-in">เกี่ยวกับเรา</h2>
-            <div class="about-content">
-                <div class="about-text fade-in">
-                    <p>ECU Remap Pro เป็นผู้นำด้านการรีแมพรถยนต์ในประเทศไทย ด้วยประสบการณ์กว่า 10 ปี ในการพัฒนาและปรับแต่งระบบ ECU รถยนต์</p>
-                    <p>เรามีทีมงานมืออาชีพที่มีความเชี่ยวชาญสูง พร้อมด้วยเครื่องมือและเทคโนโลยีที่ทันสมัย เพื่อให้บริการที่ดีที่สุดแก่ลูกค้า</p>
-                    <p>ความพึงพอใจของลูกค้าคือสิ่งสำคัญที่สุดสำหรับเรา เราจึงมุ่งมั่นในการพัฒนาและปรับปรุงบริการอย่างต่อเนื่อง</p>
-                </div>
-                <div class="about-image fade-in">
-                    <span>🏆 Award Winning</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2 class="section-title fade-in">ติดต่อเรา</h2>
-            <div class="contact-content">
-                <div class="contact-info fade-in">
-                    <h3>📍 ข้อมูลติดต่อ</h3>
-                    <p>📧 Email: info@ecuremappro.com</p>
-                    <p>📱 โทร: 02-123-4567</p>
-                    <p>📱 Line: @ecuremappro</p>
-                    <p>🕒 เวลาทำการ: จันทร์-เสาร์ 9:00-18:00</p>
-                    <p>🏢 ที่อยู่: 123 ถ.รามคำแหง แขวงหัวหมาก เขตบางกะปิ กรุงเทพฯ 10240</p>
-                </div>
-                <div class="contact-form fade-in">
-                    <h3>💬 ส่งข้อความถึงเรา</h3>
-                    <form>
-                        <div class="form-group">
-                            <input type="text" placeholder="ชื่อของคุณ" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" placeholder="อีเมลของคุณ" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="tel" placeholder="เบอร์โทรศัพท์" required>
-                        </div>
-                        <div class="form-group">
-                            <textarea rows="4" placeholder="ข้อความของคุณ" required></textarea>
-                        </div>
-                        <button type="submit" class="submit-button">ส่งข้อความ</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 ECU Remap Pro. สงวนลิขสิทธิ์ทุกประการ</p>
-        </div>
+    <!-- Footer -->
+    <footer class="mt-16 text-center text-sm text-gray-500 pb-6">
+      <p>&copy; 2025 TR Remap. All rights reserved.</p>
     </footer>
 
-    <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+  </main>
 
-        // Fade in animation on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.fade-in').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Header background change on scroll
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(255, 255, 255, 0.95)';
-                header.style.color = '#333';
-            } else {
-                header.style.background = 'rgba(255, 255, 255, 0.1)';
-                header.style.color = '#fff';
-            }
-        });
-
-        // Buy button click handler
-        document.querySelectorAll('.buy-button').forEach(button => {
-            button.addEventListener('click', function() {
-                alert('ขอบคุณสำหรับความสนใจ! กรุณาติดต่อเราผ่านช่องทางการติดต่อเพื่อสั่งซื้อ');
-            });
-        });
-
-        // Contact form submission
-        document.querySelector('.contact-form form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('ขอบคุณสำหรับข้อความ! เราจะติดต่อกลับโดยเร็วที่สุด');
-            this.reset();
-        });
-    </script>
 </body>
 </html>
